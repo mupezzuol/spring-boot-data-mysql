@@ -1,7 +1,6 @@
 package com.springbootdata.config;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
@@ -16,19 +15,12 @@ import com.springbootdata.repository.UserRepository;
 public class DataInitilizr implements ApplicationListener<ContextRefreshedEvent> {
 
 	@Autowired
-	UserRepository userRepository; //Spring Injeta para usar spring data
+	UserRepository userRepository; //Spring Data Repository (métodos save, dele, findAll etc...)
 
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent arg0) {
+		criarRegistros();//Crio registros pela primeira vez
 		
-		//Busco no Banco e valido se é vazia ou não a lista, se for cadastro, se não passo reto
-		List<User> users = userRepository.findAll();
-		if (users.isEmpty()) {
-			createUser("Murillo", "murillopezzuol@hotmail.com");
-			createUser("João","joao@gmail.com");
-			createUser("Gabriella", "gabriella@gmail.com");
-			
-		}
 		
 		//Faço find por e-mail
 		User user1 = userRepository.findByEmail("murillopezzuol@hotmail.com");
@@ -41,13 +33,30 @@ public class DataInitilizr implements ApplicationListener<ContextRefreshedEvent>
 		User user3 = userRepository.findByEmailAndNome("gabriella@gmail.com", "Gabriella");
 		System.out.println(user3.getNome());//Gabriella
 		
-		
+		User user4 = userRepository.findByIdadeGreaterThan(21);
+		System.out.println(user4.getNome());//Muriçoca
 		
 	}
 	
-	public void createUser(String nome, String email) {
-		User user = new User(nome, email);
-		userRepository.save(user);//Persist com spring data
+	
+	
+	
+	//Crio registros para realizar os testes básicos de Spring Data etc...
+	private void criarRegistros(){
+		List<User> users = userRepository.findAll();//Retorno do banco a lista de users
+		if (users.isEmpty()) {
+			createUser("Murillo", "murillopezzuol@hotmail.com",21);
+			createUser("João","joao@gmail.com", 15);
+			createUser("Gabriella", "gabriella@gmail.com",19);
+			createUser("Manuela", "manuela@gmail.com",6);
+			createUser("Raul Pezzuol", "raulpezzuol@gmail.com",11);
+			createUser("Muriçoca", "muripezzuol@gmail.com",30);
+		}
+	}
+	
+	private void createUser(String nome, String email, int idade) {
+		User user = new User(nome, email, idade);
+		userRepository.save(user);//Save do spring data repository
 	}
 
 }

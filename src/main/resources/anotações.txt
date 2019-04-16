@@ -1,0 +1,18 @@
+
+### SPRING DATA REPOSITORY
+
+- É um Designer Pattern;
+- Através de um 'repository' você acessa um data source, é um objeto de conexão/comunicação (podemos usar query object);
+
+
+
+
+
+### Métodos mágicos
+
+- Posso utilizar métodos prontos ou personalizar:
+Exemplos:
+
+Default -> findAll();
+Personalizado -> findByIdadeGreaterThan();
+

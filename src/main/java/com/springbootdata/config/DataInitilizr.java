@@ -11,15 +11,24 @@ import com.springbootdata.entity.User;
 import com.springbootdata.repository.UserRepository;
 
 //Anotação mãe do Spring, exitem diversas filhas
+//ApplicationListener é uma interface onde passamos o 'ContextRefreshedEvent'...
+//Na interface 'ApplicationListener' toda vez q subirmos nossa aplicação essa classe no método 'onApplicationEvent' será executado
+//Fica escutando nossa aplicação, e usamos o evento para sempre q subir a aplicação ele roda esse método
+//Nesse caso estamos usando apenas para realizar alguns testes na aplicação
 @Component
 public class DataInitilizr implements ApplicationListener<ContextRefreshedEvent> {
 
 	@Autowired
-	UserRepository userRepository; //Spring Data Repository (métodos save, dele, findAll etc...)
+	UserRepository userRepository; //injeção q o spring faz (data repository)
 
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent arg0) {
 		criarRegistros();//Crio registros pela primeira vez
+		
+		//Resgato o User de ID 1 do banco
+		System.out.println(userRepository.getOne(5L).getNome());//Raul Pezzuol
+		userRepository.deleteById(5L);//Deleto após printar.. (no banco é para ficar sem o ID 5)
+		
 		
 		
 		//Faço find por e-mail

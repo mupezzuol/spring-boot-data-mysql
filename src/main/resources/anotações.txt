@@ -1,8 +1,19 @@
-
 ### SPRING DATA REPOSITORY
 
 - É um Designer Pattern;
 - Através de um 'repository' você acessa um data source, é um objeto de conexão/comunicação (podemos usar query object);
+- Usamos algumas interfaces para utilizar o reposiroty, como 'JpaRepository', nela faremos o uso da Interface User(entidade do seu projeto)
+com a interface do JpaRepository.
+Exemplo de uso(spring.data.repository):
+
+* O User é o retorno do tipo da Entidade
+* O Long passado é ID na classe, no caso passamos o tipo dele que nesse caso é Long, mas poderia ser outro
+public interface UserRepository extends JpaRepository<User, Long>
+
+- Apenas com essa interface 'JpaRepository' podemos ter um CRUD de forma simples
+
+
+Observação: Quando criamos 'UserRepository' seria como se fosse um 'UserDAO', classe q faz conexão com banco de dados
 
 
 

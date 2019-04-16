@@ -27,3 +27,5 @@ Exemplos:
 Default -> findAll();
 Personalizado -> findByIdadeGreaterThan();
 
+Personalizado: Retorna o User q tenha a 'idade' maior(>) e(AND) seja menor(<) que 'idadeMaior'. São passados em ordem do parametro
+findByIdadeGreaterThanAndIdadeLessThan(int idade, int idadeMaior);

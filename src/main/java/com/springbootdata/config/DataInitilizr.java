@@ -25,30 +25,45 @@ public class DataInitilizr implements ApplicationListener<ContextRefreshedEvent>
 	public void onApplicationEvent(ContextRefreshedEvent arg0) {
 		criarRegistros();//Crio registros pela primeira vez
 		
+		
 		//Resgato o User de ID 1 do banco
 		System.out.println(userRepository.getOne(5L).getNome());//Raul Pezzuol
 		userRepository.deleteById(5L);//Deleto após printar.. (no banco é para ficar sem o ID 5)
-		
 		
 		
 		//Faço find por e-mail
 		User user1 = userRepository.findByEmail("murillopezzuol@hotmail.com");
 		System.out.println(user1.getNome());//Murillo
 		
+		
 		//Uso query, utilizando like para melhorar meu find
 		User user2 = userRepository.findByNomeQualquerCoisa("jo");
 		System.out.println(user2.getNome());//João
 		
+		
 		User user3 = userRepository.findByEmailAndNome("gabriella@gmail.com", "Gabriella");
 		System.out.println(user3.getNome());//Gabriella
 		
-		User user4 = userRepository.findByIdadeGreaterThan(21);
+		
+		//Valido dessa forma pois até o momento eu tenho um User com idade 50
+		User user4 = userRepository.findByIdadeGreaterThanAndIdadeLessThan(21,50);
 		System.out.println(user4.getNome());//Muriçoca
 		
+		
+		//Alterando registros com método SAVE
+		atualizarRegistro();
+		System.out.println(userRepository.getOne(7L).getNome());//Nome Alterado
 	}
 	
 	
-	
+	//Atualizando o registro. Seto os valores e chamo o método save normalmente, ele faz toda a transação/merge
+	private void atualizarRegistro(){
+		User userUpdate = userRepository.getOne(7L);
+		userUpdate.setNome("Nome Alterado");
+		userUpdate.setEmail("email.alterado@hotmail.com");
+		userUpdate.setIdade(25);
+		userRepository.save(userUpdate);
+	}
 	
 	//Crio registros para realizar os testes básicos de Spring Data etc...
 	private void criarRegistros(){
@@ -60,6 +75,7 @@ public class DataInitilizr implements ApplicationListener<ContextRefreshedEvent>
 			createUser("Manuela", "manuela@gmail.com",6);
 			createUser("Raul Pezzuol", "raulpezzuol@gmail.com",11);
 			createUser("Muriçoca", "muripezzuol@gmail.com",30);
+			createUser("NOME", "E-MAIL",50);
 		}
 	}
 	

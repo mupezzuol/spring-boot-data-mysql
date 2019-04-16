@@ -24,7 +24,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	@Query("select u from User u where u.email = ?1 and u.nome = ?2")
 	User findByEmailAndNome(String email, String nome);
 	
-	//Retorna o User quando a idade for maior que a idade que for passada por parametro
-	User findByIdadeGreaterThan(int idade);
+	//Retorna o User quando a idade for maior que a idade que for passada por parametro e menor que a segunda idade passada por parametro
+	User findByIdadeGreaterThanAndIdadeLessThan(int idade, int idadeMaior);
+
 	
 }
